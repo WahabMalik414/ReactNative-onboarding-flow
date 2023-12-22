@@ -14,8 +14,12 @@ import {
   Image,
   TextInput,
   Linking,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -23,50 +27,62 @@ export default function Login() {
     navigation.navigate('Signup');
   }
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <View style={styles.titleView}>
-            <Text style={styles.title}>Login Now</Text>
-          </View>
-          <View style={styles.textView}>
-            <Text style={styles.textRegister}>
-              Please Login to continue using our app.
-            </Text>
-          </View>
-        </View>
-
-        <Pressable style={({pressed}) => styles.googleButton(pressed)}>
-          {({pressed}) => (
-            <View style={styles.googleView}>
-              <Image
-                source={require('../../assets/google.png')}
-                style={styles.googleImage}
-              />
-              <Text style={styles.googleText}>Continue with Google</Text>
+    <KeyboardAvoidingView
+      style={styles.keyboard}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <SafeAreaView style={styles.SafeAreaView}>
+        <View style={styles.mainContainer}>
+          <View style={styles.container}>
+            <View style={styles.imageContainer}>
+              <View style={styles.titleView}>
+                <Text style={styles.title}>Login Now</Text>
+              </View>
+              <View style={styles.textView}>
+                <Text style={styles.textRegister}>
+                  Please Login to continue using our app.
+                </Text>
+              </View>
             </View>
-          )}
-        </Pressable>
-        <Text style={styles.inputOr}>Or</Text>
-        <TextInput style={styles.input} placeholder="Email" />
-        <TextInput style={styles.input} placeholder="Password" />
-        <Pressable style={({pressed}) => styles.button(pressed)}>
-          {({pressed}) => <Text style={styles.text}>Login</Text>}
-        </Pressable>
-        <View style={styles.loginLink}>
-          <Text style={styles.loginText}>
-            Don't have an account?{' '}
-            <Text style={styles.link} onPress={handleSignup}>
-              Sign up
-            </Text>
-          </Text>
+
+            <Pressable style={({pressed}) => styles.googleButton(pressed)}>
+              {({pressed}) => (
+                <View style={styles.googleView}>
+                  <Image
+                    source={require('../../assets/google.png')}
+                    style={styles.googleImage}
+                  />
+                  <Text style={styles.googleText}>Continue with Google</Text>
+                </View>
+              )}
+            </Pressable>
+            <Text style={styles.inputOr}>Or</Text>
+            <TextInput style={styles.input} placeholder="Email" />
+            <TextInput style={styles.input} placeholder="Password" />
+            <Pressable style={({pressed}) => styles.button(pressed)}>
+              {({pressed}) => <Text style={styles.text}>Login</Text>}
+            </Pressable>
+            <View style={styles.loginLink}>
+              <Text style={styles.loginText}>
+                Don't have an account?{' '}
+                <Text style={styles.link} onPress={handleSignup}>
+                  Sign up
+                </Text>
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  keyboard: {
+    flex: 1,
+  },
+  SafeAreaView: {
+    flex: 1,
+  },
   inputOr: {
     fontSize: 24,
     fontWeight: 'bold',
