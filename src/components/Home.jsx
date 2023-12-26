@@ -8,7 +8,7 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text, View, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
+import Icon from '../util/Icon';
 function Home() {
   const navigation = useNavigation();
   function handleLoginPress() {
@@ -21,11 +21,13 @@ function Home() {
     <View style={styles.mainContainer}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image
+          {/* <Image
             source={require('../../assets/logo.png')}
             style={styles.image}
-          />
+          /> */}
+          <Icon style={styles.image} />
         </View>
+
         <View style={styles.welcomeView}>
           <Text style={styles.welcome}>Welcome</Text>
         </View>
@@ -54,23 +56,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    borderRadius: 50,
     backgroundColor: '#A9e0c5',
-    overflow: 'hidden',
     alignItems: 'center',
   },
   image: {
-    width: '80%',
-    height: '80%',
+    width: '100%',
+    height: '100%',
+    alignSelf: 'center',
+    right: -10,
   },
   imageContainer: {
     backgroundColor: '#000',
-    width: '120%',
-    height: '60%',
+    width: '100%',
+    height: '35%',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 999,
-    top: -100,
+    borderBottomLeftRadius: 100,
+    borderBottomRightRadius: 100,
+    marginBottom: 100,
   },
   welcome: {
     fontSize: 45,
