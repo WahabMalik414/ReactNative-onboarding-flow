@@ -8,7 +8,9 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text, View, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Icon from '../util/Icon';
+import Logo from '../util/Logo';
+import Icon from 'react-native-vector-icons/AntDesign';
+
 function Home() {
   const navigation = useNavigation();
   function handleLoginPress() {
@@ -25,7 +27,7 @@ function Home() {
             source={require('../../assets/logo.png')}
             style={styles.image}
           /> */}
-          <Icon style={styles.image} />
+          <Logo style={styles.image} />
         </View>
 
         <View style={styles.welcomeView}>
@@ -34,12 +36,22 @@ function Home() {
         <Pressable
           onPress={handleLoginPress}
           style={({pressed}) => styles.button(pressed)}>
-          {({pressed}) => <Text style={styles.text}>Login</Text>}
+          {({pressed}) => (
+            <View style={styles.buttonContainer}>
+              <Text style={styles.text}>Login</Text>
+              <Icon name="user" size={30} color="white" style={styles.Icon} />
+            </View>
+          )}
         </Pressable>
         <Pressable
           onPress={handleSignupPress}
           style={({pressed}) => styles.button(pressed)}>
-          {({pressed}) => <Text style={styles.text}>Signup</Text>}
+          {({pressed}) => (
+            <View style={styles.buttonContainer}>
+              <Text style={styles.text}>Signup</Text>
+              <Icon name="book" size={30} color="white" style={styles.Icon} />
+            </View>
+          )}
         </Pressable>
       </View>
     </View>
@@ -53,6 +65,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  Icon: {
+    left: 60,
+  },
   container: {
     flex: 1,
     width: '100%',
@@ -64,6 +79,14 @@ const styles = StyleSheet.create({
     height: '100%',
     alignSelf: 'center',
     right: -10,
+  },
+  buttonContainer: {
+    flex: 1,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
   },
   imageContainer: {
     backgroundColor: '#000',

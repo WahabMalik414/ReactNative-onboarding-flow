@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -46,10 +47,13 @@ export default function Login() {
           <Pressable style={({pressed}) => styles.googleButton(pressed)}>
             {({pressed}) => (
               <View style={styles.googleView}>
-                <Image
-                  source={require('../../assets/google.png')}
-                  style={styles.googleImage}
+                <Icon
+                  name="google"
+                  size={30}
+                  color="black"
+                  style={styles.Icon}
                 />
+
                 <Text style={styles.googleText}>Continue with Google</Text>
               </View>
             )}
@@ -86,6 +90,9 @@ const styles = StyleSheet.create({
     height: 25,
     marginLeft: 10,
     marginRight: 10,
+  },
+  Icon: {
+    margin: 10,
   },
   mainContainer: {
     flex: 1,
