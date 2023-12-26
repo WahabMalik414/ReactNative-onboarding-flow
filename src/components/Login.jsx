@@ -27,62 +27,54 @@ export default function Login() {
     navigation.navigate('Signup');
   }
   return (
-    <KeyboardAvoidingView
-      style={styles.keyboard}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <SafeAreaView style={styles.SafeAreaView}>
-        <View style={styles.mainContainer}>
-          <View style={styles.container}>
-            <View style={styles.imageContainer}>
-              <View style={styles.titleView}>
-                <Text style={styles.title}>Login Now</Text>
-              </View>
-              <View style={styles.textView}>
-                <Text style={styles.textRegister}>
-                  Please Login to continue using our app.
-                </Text>
-              </View>
+    <View style={styles.mainContainer}>
+      <ScrollView
+        style={styles.ScrollContainer}
+        contentContainerStyle={styles.contentContainerStyle}>
+        <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <View style={styles.titleView}>
+              <Text style={styles.title}>Login Now</Text>
             </View>
-
-            <Pressable style={({pressed}) => styles.googleButton(pressed)}>
-              {({pressed}) => (
-                <View style={styles.googleView}>
-                  <Image
-                    source={require('../../assets/google.png')}
-                    style={styles.googleImage}
-                  />
-                  <Text style={styles.googleText}>Continue with Google</Text>
-                </View>
-              )}
-            </Pressable>
-            <Text style={styles.inputOr}>Or</Text>
-            <TextInput style={styles.input} placeholder="Email" />
-            <TextInput style={styles.input} placeholder="Password" />
-            <Pressable style={({pressed}) => styles.button(pressed)}>
-              {({pressed}) => <Text style={styles.text}>Login</Text>}
-            </Pressable>
-            <View style={styles.loginLink}>
-              <Text style={styles.loginText}>
-                Don't have an account?{' '}
-                <Text style={styles.link} onPress={handleSignup}>
-                  Sign up
-                </Text>
+            <View style={styles.textView}>
+              <Text style={styles.textRegister}>
+                Please Login to continue using our app.
               </Text>
             </View>
           </View>
+
+          <Pressable style={({pressed}) => styles.googleButton(pressed)}>
+            {({pressed}) => (
+              <View style={styles.googleView}>
+                <Image
+                  source={require('../../assets/google.png')}
+                  style={styles.googleImage}
+                />
+                <Text style={styles.googleText}>Continue with Google</Text>
+              </View>
+            )}
+          </Pressable>
+          <Text style={styles.inputOr}>Or</Text>
+          <TextInput style={styles.input} placeholder="Email" />
+          <TextInput style={styles.input} placeholder="Password" />
+          <Pressable style={({pressed}) => styles.button(pressed)}>
+            {({pressed}) => <Text style={styles.text}>Login</Text>}
+          </Pressable>
+          <View style={styles.loginLink}>
+            <Text style={styles.loginText}>
+              Don't have an account?{' '}
+              <Text style={styles.link} onPress={handleSignup}>
+                Sign up
+              </Text>
+            </Text>
+          </View>
         </View>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  keyboard: {
-    flex: 1,
-  },
-  SafeAreaView: {
-    flex: 1,
-  },
   inputOr: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -97,9 +89,22 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
+    width: '100%',
     backgroundColor: '#000000',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+  },
+  ScrollContainer: {
+    flex: 1,
+    width: '100%',
+    backgroundColor: '#A9e0c5',
+  },
+  contentContainerStyle: {
+    alignItems: 'center',
+  },
+
+  container: {
+    width: '100%',
+    alignItems: 'center',
   },
   link: {
     color: 'white',
@@ -123,14 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  container: {
-    flex: 1,
-    width: '100%',
-    borderRadius: 50,
-    backgroundColor: '#A9e0c5',
-    overflow: 'hidden',
-    alignItems: 'center',
-  },
+
   titleView: {
     marginTop: 30,
   },
@@ -156,8 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginTop: 30,
     justifyContent: 'center',
-    shadowColor: '#000', // Add this line
-    elevation: 15,
+    shadowColor: '#000',
   }),
   button: pressed => ({
     backgroundColor: pressed ? '#616060' : '#000000',
@@ -190,7 +187,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingLeft: 35,
     justifyContent: 'center',
-    borderRadius: 52,
-    top: -5,
+    borderBottomLeftRadius: 52,
+    borderBottomRightRadius: 52,
+    paddingBottom: 20,
   },
 });
