@@ -6,6 +6,8 @@
  */
 
 import React from 'react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {CheckBox} from '@rneui/themed';
 import {
   Pressable,
   StyleSheet,
@@ -23,67 +25,96 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default function Login() {
+  const [checked, setChecked] = React.useState(true);
+  const toggleCheckbox = () => setChecked(!checked);
   const navigation = useNavigation();
   function handleSignup() {
     navigation.navigate('Signup');
   }
   return (
-    <View style={styles.mainContainer}>
-      <ScrollView
-        style={styles.ScrollContainer}
-        contentContainerStyle={styles.contentContainerStyle}>
-        <View style={styles.container}>
-          <View style={styles.imageContainer}>
-            <View style={styles.titleView}>
-              <Text style={styles.title}>Login Now</Text>
-            </View>
-            <View style={styles.textView}>
-              <Text style={styles.textRegister}>
-                Please Login to continue using our app.
-              </Text>
-            </View>
-          </View>
-
-          <Pressable style={({pressed}) => styles.googleButton(pressed)}>
-            {({pressed}) => (
-              <View style={styles.googleView}>
-                <Icon
-                  name="google"
-                  size={30}
-                  color="black"
-                  style={styles.Icon}
-                />
-
-                <Text style={styles.googleText}>Continue with Google</Text>
+    <SafeAreaProvider>
+      <View style={styles.mainContainer}>
+        <ScrollView
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.contentContainerStyle}>
+          <View style={styles.container}>
+            <View style={styles.imageContainer}>
+              <View style={styles.titleView}>
+                <Text style={styles.title}>Login Now</Text>
               </View>
-            )}
-          </Pressable>
-          <Text style={styles.inputOr}>Or</Text>
-          <TextInput style={styles.input} placeholder="Email" />
-          <TextInput style={styles.input} placeholder="Password" />
-          <Pressable style={({pressed}) => styles.button(pressed)}>
-            {({pressed}) => <Text style={styles.text}>Login</Text>}
-          </Pressable>
-          <View style={styles.loginLink}>
-            <Text style={styles.loginText}>
-              Don't have an account?{' '}
-              <Text style={styles.link} onPress={handleSignup}>
-                Sign up
+              <View style={styles.textView}>
+                <Text style={styles.textRegister}>
+                  Please Login to continue using our app.
+                </Text>
+              </View>
+            </View>
+
+            <Pressable style={({pressed}) => styles.googleButton(pressed)}>
+              {({pressed}) => (
+                <View style={styles.googleView}>
+                  <Icon
+                    name="google"
+                    size={30}
+                    color="black"
+                    style={styles.Icon}
+                  />
+
+                  <Text style={styles.googleText}>Continue with Google</Text>
+                </View>
+              )}
+            </Pressable>
+            <Text style={styles.inputOr}>Or</Text>
+            <TextInput style={styles.input} placeholder="Email" />
+            <TextInput style={styles.input} placeholder="Password" />
+            <Pressable style={({pressed}) => styles.button(pressed)}>
+              {({pressed}) => <Text style={styles.text}>Login</Text>}
+            </Pressable>
+            <View style={styles.Term}>
+              <Text>I agree to terms and conditions</Text>
+              <CheckBox
+                checked={checked}
+                onPress={toggleCheckbox}
+                size={15}
+                checkedColor="#000"
+                uncheckedColor="#000"
+                iconType="fontisto"
+                checkedIcon="checkbox-active"
+                uncheckedIcon={'checkbox-passive'}
+                containerStyle={styles.checkBoxContainer}
+              />
+            </View>
+            <View style={styles.loginLink}>
+              <Text style={styles.loginText}>
+                Don't have an account?{' '}
+                <Text style={styles.link} onPress={handleSignup}>
+                  Sign up
+                </Text>
               </Text>
-            </Text>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  checkBoxContainer: {
+    backgroundColor: 'transparent',
+  },
+  Term: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   inputOr: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#222',
     marginTop: 10,
+  },
+  Icon: {
+    margin: 10,
   },
   googleImage: {
     width: 25,
@@ -91,26 +122,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
-  Icon: {
-    margin: 10,
-  },
   mainContainer: {
     flex: 1,
-    width: '100%',
     backgroundColor: '#000000',
-    alignItems: 'center',
-  },
-  ScrollContainer: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: '#A9e0c5',
-  },
-  contentContainerStyle: {
-    alignItems: 'center',
-  },
-
-  container: {
-    width: '100%',
     alignItems: 'center',
   },
   link: {
@@ -135,7 +149,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-
+  container: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+  },
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: '#A9e0c5',
+    width: '100%',
+  },
+  contentContainerStyle: {
+    flex: 1,
+    alignItems: 'center',
+  },
   titleView: {
     marginTop: 30,
   },
@@ -161,14 +188,14 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginTop: 30,
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: '#000', // Add this line
+    elevation: 15,
   }),
   button: pressed => ({
     backgroundColor: pressed ? '#616060' : '#000000',
     width: 300,
     height: 60,
     borderRadius: 25,
-    marginTop: 90,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000', // Add this line

@@ -10,6 +10,7 @@ import {Pressable, StyleSheet, Text, View, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Logo from '../util/Logo';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {CheckBox} from '@rneui/themed';
 
 function Home() {
   const navigation = useNavigation();

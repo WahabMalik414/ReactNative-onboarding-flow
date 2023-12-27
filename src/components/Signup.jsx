@@ -6,6 +6,8 @@
  */
 
 import React from 'react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {CheckBox} from '@rneui/themed';
 import {
   Pressable,
   StyleSheet,
@@ -19,66 +21,94 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 export default function Signup() {
+  const [checked, setChecked] = React.useState(true);
+  const toggleCheckbox = () => setChecked(!checked);
   const navigation = useNavigation();
   function handleLogin() {
     navigation.navigate('Login');
   }
+
   return (
-    <View style={styles.mainContainer}>
-      <ScrollView
-        style={styles.scrollContainer}
-        contentContainerStyle={styles.contentContainerStyle}>
-        <View style={styles.container}>
-          <View style={styles.imageContainer}>
-            <View style={styles.titleView}>
-              <Text style={styles.title}>Sign up</Text>
-            </View>
-            <View style={styles.textView}>
-              <Text style={styles.textRegister}>
-                Please Register with email and sign up to continue using our
-                app.
-              </Text>
-            </View>
-          </View>
-
-          <Pressable style={({pressed}) => styles.googleButton(pressed)}>
-            {({pressed}) => (
-              <View style={styles.googleView}>
-                <Icon
-                  name="google"
-                  size={30}
-                  color="black"
-                  style={styles.Icon}
-                />
-
-                <Text style={styles.googleText}>Continue with Google</Text>
+    <SafeAreaProvider>
+      <View style={styles.mainContainer}>
+        <ScrollView
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.contentContainerStyle}>
+          <View style={styles.container}>
+            <View style={styles.imageContainer}>
+              <View style={styles.titleView}>
+                <Text style={styles.title}>Sign up</Text>
               </View>
-            )}
-          </Pressable>
-          <Text style={styles.inputOr}>Or</Text>
-          <TextInput style={styles.input} placeholder="Email" />
+              <View style={styles.textView}>
+                <Text style={styles.textRegister}>
+                  Please Register with email and sign up to continue using our
+                  app.
+                </Text>
+              </View>
+            </View>
 
-          <TextInput style={styles.input} placeholder="Create-Password" />
-          <TextInput style={styles.input} placeholder="Confirm-Password" />
-          <Pressable style={({pressed}) => styles.button(pressed)}>
-            {({pressed}) => <Text style={styles.text}>Signup</Text>}
-          </Pressable>
-          <View style={styles.loginLink}>
-            <Text style={styles.loginText}>
-              Already have an account?{' '}
-              <Text style={styles.link} onPress={handleLogin}>
-                {' '}
-                Log in
+            <Pressable style={({pressed}) => styles.googleButton(pressed)}>
+              {({pressed}) => (
+                <View style={styles.googleView}>
+                  <Icon
+                    name="google"
+                    size={30}
+                    color="black"
+                    style={styles.Icon}
+                  />
+
+                  <Text style={styles.googleText}>Continue with Google</Text>
+                </View>
+              )}
+            </Pressable>
+            <Text style={styles.inputOr}>Or</Text>
+            <TextInput style={styles.input} placeholder="Email" />
+
+            <TextInput style={styles.input} placeholder="Create-Password" />
+            <TextInput style={styles.input} placeholder="Confirm-Password" />
+
+            <Pressable style={({pressed}) => styles.button(pressed)}>
+              {({pressed}) => <Text style={styles.text}>Signup</Text>}
+            </Pressable>
+            <View style={styles.Term}>
+              <Text>I agree to terms and conditions</Text>
+              <CheckBox
+                checked={checked}
+                onPress={toggleCheckbox}
+                size={15}
+                checkedColor="#000"
+                uncheckedColor="#000"
+                iconType="fontisto"
+                checkedIcon="checkbox-active"
+                uncheckedIcon={'checkbox-passive'}
+                containerStyle={styles.checkBoxContainer}
+              />
+            </View>
+            <View style={styles.loginLink}>
+              <Text style={styles.loginText}>
+                Already have an account?{' '}
+                <Text style={styles.link} onPress={handleLogin}>
+                  {' '}
+                  Log in
+                </Text>
               </Text>
-            </Text>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  checkBoxContainer: {
+    backgroundColor: 'transparent',
+  },
+  Term: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   inputOr: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -122,6 +152,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
+    flex: 1,
     width: '100%',
     alignItems: 'center',
   },
@@ -130,6 +161,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#A9e0c5',
   },
   contentContainerStyle: {
+    flex: 1,
     alignItems: 'center',
   },
   titleView: {
