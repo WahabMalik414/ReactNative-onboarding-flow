@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   contentContainerStyle: {
-    flex: 1,
     alignItems: 'center',
   },
   titleView: {

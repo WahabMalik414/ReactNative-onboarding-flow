@@ -161,7 +161,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#A9e0c5',
   },
   contentContainerStyle: {
-    flex: 1,
     alignItems: 'center',
   },
   titleView: {
