@@ -45,66 +45,65 @@ export default function TasksTodoList({Search, EditIndex, SetEditIndex}) {
     dispatch(markCompleted(item.id));
   };
   return (
-    <KeyboardAvoidingView behavior="height" style={styles.TodoListContainer}>
-      <FlatList
-        style={styles.TodoList}
-        data={filteredTasks}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <View style={styles.Entry} key={item.id}>
-            {EditIndex === item.id ? (
-              <View>
-                <Text>Name:</Text>
-                <TextInput
-                  style={styles.TextInput}
-                  onChangeText={text => setEditInput(text)}
-                  defaultValue={item.name}
-                />
-                <Text>Description:</Text>
-                <TextInput
-                  style={styles.TextInput}
-                  onChangeText={text => setEditDescription(text)}
-                  defaultValue={item.description}
-                />
-              </View>
-            ) : (
-              <Text style={styles.Task}>{item.name}</Text>
-            )}
-            <View style={styles.Buttons}>
-              {EditIndex === item.id ? (
-                <Button
-                  title="save"
-                  onPress={() => handleSave(item)}
-                  color="green"
-                />
-              ) : (
-                <Button
-                  title="Edit"
-                  onPress={() => handleEdit(item)}
-                  color="blue"
-                />
-              )}
-              <Button
-                title="Delete"
-                onPress={() => handleDelete(item)}
-                color="red"
+    <FlatList
+      removeClippedSubviews={false}
+      style={styles.TodoList}
+      data={filteredTasks}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({item}) => (
+        <View style={styles.Entry} key={item.id}>
+          {EditIndex === item.id ? (
+            <View>
+              <Text>Name:</Text>
+              <TextInput
+                style={styles.TextInput}
+                onChangeText={text => setEditInput(text)}
+                defaultValue={item.name}
               />
-              <Button
-                title="Details"
-                onPress={() => handleDetail(item)}
-                color="blue"
-              />
-              <Button
-                title="Mark done"
-                disabled={item.isCompleted}
-                onPress={() => handleCompleted(item)}
-                color="orange"
+              <Text>Description:</Text>
+              <TextInput
+                style={styles.TextInput}
+                onChangeText={text => setEditDescription(text)}
+                defaultValue={item.description}
               />
             </View>
+          ) : (
+            <Text style={styles.Task}>{item.name}</Text>
+          )}
+          <View style={styles.Buttons}>
+            {EditIndex === item.id ? (
+              <Button
+                title="save"
+                onPress={() => handleSave(item)}
+                color="green"
+              />
+            ) : (
+              <Button
+                title="Edit"
+                onPress={() => handleEdit(item)}
+                color="blue"
+              />
+            )}
+            <Button
+              title="Delete"
+              onPress={() => handleDelete(item)}
+              color="red"
+            />
+            <Button
+              title="Details"
+              onPress={() => handleDetail(item)}
+              color="blue"
+            />
+            <Button
+              title="Mark done"
+              disabled={item.isCompleted}
+              onPress={() => handleCompleted(item)}
+              color="orange"
+            />
           </View>
-        )}
-      />
-    </KeyboardAvoidingView>
+        </View>
+      )}
+    />
   );
 }
 
@@ -129,17 +128,17 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 10,
     justifyContent: 'flex-start',
-    margin: 5,
+    marginTop: 5,
     flex: 1,
   },
   Task: {
     flexWrap: 'wrap',
     flexShrink: 1,
-
     fontSize: 20,
   },
   TodoList: {
-    marginTop: 20,
+    flex: 1,
+    marginTop: 5,
   },
   InputContainer: {
     flexDirection: 'row',

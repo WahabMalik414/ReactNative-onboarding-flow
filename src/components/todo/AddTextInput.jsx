@@ -51,22 +51,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'roboto',
   },
-  // DescInput: {
-  //   height: 80,
-  //   borderWidth: 2,
-  //   padding: 5,
-  //   width: 300,
-  //   fontSize: 20,
-  //   borderColor: 'gray',
-  // },
-  // NameInput: {
-  //   height: 40,
-  //   borderWidth: 2,
-  //   padding: 5,
-  //   width: 300,
-  //   fontSize: 20,
-  //   borderColor: 'gray',
-  // },
+
   button: pressed => ({
     backgroundColor: pressed ? '#616060' : '#000000',
     width: 250,
@@ -90,7 +75,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 20,
     fontSize: 20,
-    height: 100,
+    height: 65,
     width: 296,
     borderRadius: 13,
     backgroundColor: '#D0EEDF',
