@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-export default function TaskDescription({navigation, route}) {
+export default function TaskDescription({route}) {
   const {item} = route.params;
 
   return (

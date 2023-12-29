@@ -3,7 +3,6 @@ import * as React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
 import {
   View,
   FlatList,
@@ -14,7 +13,8 @@ import {
   Alert,
   KeyboardAvoidingView,
 } from 'react-native';
-
+import {useDispatch} from 'react-redux';
+import {decrement} from './markSlice';
 export default function TasksTodoList({
   tasks,
   Search,
@@ -26,7 +26,7 @@ export default function TasksTodoList({
   const filteredTasks = tasks.filter(item => item.name.includes(Search));
   const [editInput, setEditInput] = useState('');
   const [editDescription, setEditDescription] = useState('');
-
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const handleDelete = item => {
     SetEditIndex(null);
@@ -34,6 +34,7 @@ export default function TasksTodoList({
     setTasks(tasks.filter((task, taskIndex) => taskIndex !== index));
     setEditInput('');
     setSearch('');
+    dispatch(decrement());
   };
 
   const handleSave = item => {
@@ -179,6 +180,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderColor: 'gray',
   },
+
   Header: {
     textAlign: 'center',
     marginTop: 20,

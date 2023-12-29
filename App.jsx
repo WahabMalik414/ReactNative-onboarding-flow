@@ -14,36 +14,52 @@ import TodoListHome from './src/components/TodoListHome';
 import Home from './src/components/Home';
 import Login from './src/components/Login';
 import Signup from './src/components/Signup';
+import {Provider} from 'react-redux';
+import {store} from './src/components/store';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="ToDoListHome">
-        <Stack.Screen
-          name="Home"
-          options={{
-            headerShown: false,
-          }}
-          component={Home}
-        />
-        <Stack.Screen
-          name="Login"
-          options={{
-            headerShown: false,
-          }}
-          component={Login}
-        />
-        <Stack.Screen
-          name="Signup"
-          options={{
-            headerShown: false,
-          }}
-          component={Signup}
-        />
-        <Stack.Screen name="ToDoListHome" component={TodoListHome} />
-        <Stack.Screen name="TaskDescription" component={TaskDescription} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="ToDoListHome">
+          <Stack.Screen
+            name="Home"
+            options={{
+              headerShown: false,
+            }}
+            component={Home}
+          />
+          <Stack.Screen
+            name="Login"
+            options={{
+              headerShown: false,
+            }}
+            component={Login}
+          />
+          <Stack.Screen
+            name="Signup"
+            options={{
+              headerShown: false,
+            }}
+            component={Signup}
+          />
+          <Stack.Screen
+            name="ToDoListHome"
+            options={{
+              headerShown: false,
+            }}
+            component={TodoListHome}
+          />
+          <Stack.Screen
+            name="TaskDescription"
+            options={{
+              headerShown: false,
+            }}
+            component={TaskDescription}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
