@@ -6,6 +6,7 @@ export default function TaskDescription({route}) {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Task Description</Text>
       <Text style={styles.Header}>Name: {item.name}</Text>
       <Text style={styles.text}>Description: {item.description}</Text>
       <Text style={styles.text}>
@@ -18,9 +19,17 @@ export default function TaskDescription({route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 40,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#A9e0c5',
+  },
+  title: {
+    fontSize: 30,
+    marginTop: 12,
+    color: 'black',
+    fontFamily: 'krona',
+    marginBottom: 100,
   },
   text: {
     marginTop: 35,

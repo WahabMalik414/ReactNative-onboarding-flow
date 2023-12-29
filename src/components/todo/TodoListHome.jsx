@@ -14,14 +14,13 @@ import AddTextInput from './AddTextInput';
 import SearchTextInput from './SearchTextInput';
 import TasksTodoList from './TasksTodoList';
 import {useSelector, useDispatch} from 'react-redux';
-import {increment} from '../todoSlice.js';
+import {increment, addTask} from '../todoSlice.js';
 export default function TodoListHome() {
-  const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState('');
   const [description, setDescription] = useState('');
   const [EditIndex, SetEditIndex] = useState(null);
   const [Search, setSearch] = useState('');
-  const count = useSelector(state => state.count.totalTasks);
+  const count = useSelector(state => state.todo.totalTasks);
   const dispatch = useDispatch();
 
   const handleAdd = () => {
@@ -32,8 +31,7 @@ export default function TodoListHome() {
         description: description,
         isCompleted: false,
       };
-      dispatch(increment());
-      setTasks(prev => [...prev, newTask]);
+      dispatch(addTask(newTask));
     } else {
       Alert.alert('Add both name and description');
     }
@@ -51,12 +49,9 @@ export default function TodoListHome() {
       <Text style={styles.totalTasks}>Total tasks:{count}</Text>
       <SearchTextInput setSearch={setSearch} />
       <TasksTodoList
-        tasks={tasks}
         Search={Search}
         EditIndex={EditIndex}
         SetEditIndex={SetEditIndex}
-        setTasks={setTasks}
-        setSearch={setSearch}
       />
     </KeyboardAvoidingView>
   );

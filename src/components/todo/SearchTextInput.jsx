@@ -20,14 +20,6 @@ const styles = StyleSheet.create({
     width: 296,
     justifyContent: 'center',
   },
-  // TextInput: {
-  //   height: 40,
-  //   borderWidth: 2,
-  //   padding: 5,
-  //   width: 300,
-  //   fontSize: 20,
-  //   borderColor: 'gray',
-  // },
   TextInput: {
     margin: 15,
     padding: 20,

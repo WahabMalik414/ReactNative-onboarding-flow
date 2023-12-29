@@ -1,8 +1,6 @@
 import {useState, useRef} from 'react';
 import * as React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   View,
   FlatList,
@@ -10,48 +8,32 @@ import {
   Button,
   Text,
   TextInput,
-  Alert,
   KeyboardAvoidingView,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {decrement} from '../todoSlice';
-export default function TasksTodoList({
-  tasks,
-  Search,
-  EditIndex,
-  SetEditIndex,
-  setTasks,
-  setSearch,
-}) {
-  const filteredTasks = tasks.filter(item => item.name.includes(Search));
+import {useDispatch, useSelector} from 'react-redux';
+import {editTask, markCompleted, removeTask} from '../todoSlice';
+
+export default function TasksTodoList({Search, EditIndex, SetEditIndex}) {
+  const todos = useSelector(state => state.todo.todos);
+  const filteredTasks = todos.filter(item => item.name.includes(Search));
   const [editInput, setEditInput] = useState('');
   const [editDescription, setEditDescription] = useState('');
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const handleDelete = item => {
     SetEditIndex(null);
-    const index = tasks.findIndex(task => task.id === item.id);
-    setTasks(tasks.filter((task, taskIndex) => taskIndex !== index));
     setEditInput('');
-    setSearch('');
-    dispatch(decrement());
+    dispatch(removeTask(item.id));
   };
 
   const handleSave = item => {
-    const newTasks = [...tasks];
-    const indexToEdit = newTasks.findIndex(task => task.id === item.id);
-    if (indexToEdit !== -1) {
-      newTasks[indexToEdit].name = editInput;
-      newTasks[indexToEdit].description = editDescription;
-      setTasks(newTasks);
-      SetEditIndex(null);
-      setEditInput('');
-      setSearch('');
-    }
+    dispatch(editTask({EditIndex, editInput, editDescription}));
+    SetEditIndex(null);
+    setEditInput('');
   };
 
   const handleEdit = item => {
-    console.log(item.name);
     SetEditIndex(item.id);
     setEditDescription(item.description);
     setEditInput(item.name);
@@ -60,14 +42,7 @@ export default function TasksTodoList({
     navigation.navigate('TaskDescription', {item});
   };
   const handleCompleted = item => {
-    const index = tasks.findIndex(task => item.id === task.id);
-
-    if (tasks[index].isCompleted) {
-      Alert.alert('Task is already marked as completed');
-    } else {
-      tasks[index].isCompleted = true;
-      Alert.alert('Marked as completed');
-    }
+    dispatch(markCompleted(item.id));
   };
   return (
     <KeyboardAvoidingView behavior="height" style={styles.TodoListContainer}>
@@ -121,6 +96,7 @@ export default function TasksTodoList({
               />
               <Button
                 title="Mark done"
+                disabled={item.isCompleted}
                 onPress={() => handleCompleted(item)}
                 color="orange"
               />
