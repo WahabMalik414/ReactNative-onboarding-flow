@@ -8,14 +8,14 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import TaskDescription from './src/components/TaskDescription';
-import TasksTodoList from './src/components/TasksTodoList';
-import TodoListHome from './src/components/TodoListHome';
+import TaskDescription from './src/components/todo/TaskDescription';
+import TasksTodoList from './src/components/todo/TasksTodoList';
+import TodoListHome from './src/components/todo/TodoListHome';
 import Home from './src/components/Home';
 import Login from './src/components/Login';
 import Signup from './src/components/Signup';
 import {Provider} from 'react-redux';
-import {store} from './src/components/store';
+import {store} from './src/store/store';
 const Stack = createNativeStackNavigator();
 
 export default function App() {

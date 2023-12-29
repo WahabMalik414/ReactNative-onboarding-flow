@@ -14,7 +14,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {decrement} from './markSlice';
+import {decrement} from '../todoSlice';
 export default function TasksTodoList({
   tasks,
   Search,

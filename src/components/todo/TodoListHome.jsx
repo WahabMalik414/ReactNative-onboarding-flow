@@ -13,17 +13,15 @@ import React from 'react';
 import AddTextInput from './AddTextInput';
 import SearchTextInput from './SearchTextInput';
 import TasksTodoList from './TasksTodoList';
-
 import {useSelector, useDispatch} from 'react-redux';
-import {increment} from './markSlice.js';
-import {Header} from 'react-native/Libraries/NewAppScreen';
+import {increment} from '../todoSlice.js';
 export default function TodoListHome() {
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState('');
   const [description, setDescription] = useState('');
   const [EditIndex, SetEditIndex] = useState(null);
   const [Search, setSearch] = useState('');
-  const count = useSelector(state => state.count.value);
+  const count = useSelector(state => state.count.totalTasks);
   const dispatch = useDispatch();
 
   const handleAdd = () => {
