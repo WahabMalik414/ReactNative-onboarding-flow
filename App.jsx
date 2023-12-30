@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TaskDescription from './src/components/todo/TaskDescription';
@@ -17,57 +17,66 @@ import Signup from './src/components/Signup';
 import {Provider} from 'react-redux';
 import {store} from './src/store/store';
 import Auth from './src/Auth';
-
+import auth from '@react-native-firebase/auth';
+import GetSignedIn from './src/Auth';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const isSignedIn = GetSignedIn();
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Auth">
-        <Stack.Screen
-            name="Auth"
-            options={{
-              headerShown: false,
-            }}
-            component={Auth}
-          />
-          <Stack.Screen
-            name="Home"
-            options={{
-              headerShown: false,
-            }}
-            component={Home}
-          />
-          <Stack.Screen
-            name="Login"
-            options={{
-              headerShown: false,
-            }}
-            component={Login}
-          />
-          <Stack.Screen
-            name="Signup"
-            options={{
-              headerShown: false,
-            }}
-            component={Signup}
-          />
-          <Stack.Screen
-            name="ToDoListHome"
-            options={{
-              headerShown: false,
-            }}
-            component={TodoListHome}
-          />
-          <Stack.Screen
-            name="TaskDescription"
-            options={{
-              headerShown: false,
-            }}
-            component={TaskDescription}
-          />
+        <Stack.Navigator>
+          {isSignedIn ? (
+            <>
+              <Stack.Screen
+                name="ToDoListHome"
+                options={{
+                  headerShown: false,
+                }}
+                component={TodoListHome}
+              />
+              <Stack.Screen
+                name="TaskDescription"
+                options={{
+                  headerShown: false,
+                }}
+                component={TaskDescription}
+              />
+            </>
+          ) : (
+            <>
+              {/* <Stack.Screen
+                name="Auth"
+                options={{
+                  headerShown: false,
+                }}
+                component={Auth}
+              /> */}
+              <Stack.Screen
+                name="Home"
+                options={{
+                  headerShown: false,
+                }}
+                component={Home}
+              />
+              <Stack.Screen
+                name="Login"
+                options={{
+                  headerShown: false,
+                }}
+                component={Login}
+              />
+              <Stack.Screen
+                name="Signup"
+                options={{
+                  headerShown: false,
+                }}
+                component={Signup}
+              />
+            </>
+          )}
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

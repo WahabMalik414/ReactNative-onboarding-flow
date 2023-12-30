@@ -6,8 +6,14 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
+import auth from '@react-native-firebase/auth';
 import React from 'react';
 
+const handleLogout = () => {
+  auth()
+    .signOut()
+    .then(() => console.log('User signed out'));
+};
 export default function AddTextInput({setInput, setDescription, handleAdd}) {
   return (
     <View style={styles.InputContainer}>
@@ -28,6 +34,11 @@ export default function AddTextInput({setInput, setDescription, handleAdd}) {
           style={({pressed}) => styles.button(pressed)}>
           {({pressed}) => <Text style={styles.text}>Add</Text>}
         </Pressable>
+        <Pressable
+          onPress={handleLogout}
+          style={({pressed}) => styles.button(pressed)}>
+          {({pressed}) => <Text style={styles.text}>Logout</Text>}
+        </Pressable>
       </View>
     </View>
   );
@@ -44,6 +55,8 @@ const styles = StyleSheet.create({
   },
   ButtonContainer: {
     width: 300,
+    justifyContent: 'space-around',
+    flexDirection: 'row',
     alignItems: 'center',
   },
   text: {
@@ -54,8 +67,8 @@ const styles = StyleSheet.create({
 
   button: pressed => ({
     backgroundColor: pressed ? '#616060' : '#000000',
-    width: 250,
     height: 45,
+    width: 100,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',

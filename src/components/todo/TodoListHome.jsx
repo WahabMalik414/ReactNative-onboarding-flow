@@ -70,12 +70,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
   },
-  // Header: {
-  //   textAlign: 'center',
-  //   marginTop: 20,
-  //   fontSize: 30,
-  //   fontWeight: 'bold',
-  // },
+
   Header: {
     fontSize: 30,
     marginTop: 12,

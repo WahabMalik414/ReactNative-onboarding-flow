@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {CheckBox} from '@rneui/themed';
 import {
@@ -16,18 +16,47 @@ import {
   Image,
   TextInput,
   ScrollView,
+  Alert,
   KeyboardAvoidingView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import auth from '@react-native-firebase/auth';
+
 export default function Signup() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [checked, setChecked] = React.useState(true);
   const toggleCheckbox = () => setChecked(!checked);
   const navigation = useNavigation();
+
   function handleLogin() {
     navigation.navigate('Login');
   }
 
+  function handleSignup() {
+    console.log(password, confirmPassword);
+    if (password !== confirmPassword) {
+      return Alert.alert("Passwords don't match");
+    }
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
+  }
   return (
     <SafeAreaProvider>
       <View style={styles.mainContainer}>
@@ -62,12 +91,29 @@ export default function Signup() {
               )}
             </Pressable>
             <Text style={styles.inputOr}>Or</Text>
-            <TextInput style={styles.input} placeholder="Email" />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={text => setEmail(text)}
+            />
 
-            <TextInput style={styles.input} placeholder="Create-Password" />
-            <TextInput style={styles.input} placeholder="Confirm-Password" />
+            <TextInput
+              style={styles.input}
+              placeholder="Create-Password"
+              value={password}
+              onChangeText={text => setPassword(text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Confirm-Password"
+              value={confirmPassword}
+              onChangeText={text => setConfirmPassword(text)}
+            />
 
-            <Pressable style={({pressed}) => styles.button(pressed)}>
+            <Pressable
+              style={({pressed}) => styles.button(pressed)}
+              onPress={handleSignup}>
               {({pressed}) => <Text style={styles.text}>Signup</Text>}
             </Pressable>
             <View style={styles.Term}>

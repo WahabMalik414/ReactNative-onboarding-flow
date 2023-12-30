@@ -19,17 +19,41 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
+import auth from '@react-native-firebase/auth';
 
 export default function Login() {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [checked, setChecked] = React.useState(true);
   const toggleCheckbox = () => setChecked(!checked);
   const navigation = useNavigation();
+
   function handleSignup() {
     navigation.navigate('Signup');
+  }
+  function handleLogin() {
+    console.log(email, password);
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
   }
   return (
     <SafeAreaProvider>
@@ -40,7 +64,7 @@ export default function Login() {
           <View style={styles.container}>
             <View style={styles.imageContainer}>
               <View style={styles.titleView}>
-                <Text style={styles.title}>Login Now</Text>
+                <Text style={styles.header}>Login Now</Text>
               </View>
               <View style={styles.textView}>
                 <Text style={styles.textRegister}>
@@ -64,9 +88,21 @@ export default function Login() {
               )}
             </Pressable>
             <Text style={styles.inputOr}>Or</Text>
-            <TextInput style={styles.input} placeholder="Email" />
-            <TextInput style={styles.input} placeholder="Password" />
-            <Pressable style={({pressed}) => styles.button(pressed)}>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={text => setEmail(text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              value={password}
+              onChangeText={text => setPassword(text)}
+            />
+            <Pressable
+              style={({pressed}) => styles.button(pressed)}
+              onPress={handleLogin}>
               {({pressed}) => <Text style={styles.text}>Login</Text>}
             </Pressable>
             <View style={styles.Term}>
@@ -200,7 +236,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000', // Add this line
     elevation: 10,
   }),
-  title: {
+  header: {
     fontSize: 30,
     color: 'white',
     fontFamily: 'krona',

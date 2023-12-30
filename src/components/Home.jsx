@@ -24,10 +24,6 @@ function Home() {
     <View style={styles.mainContainer}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          {/* <Image
-            source={require('../../assets/logo.png')}
-            style={styles.image}
-          /> */}
           <Logo style={styles.image} />
         </View>
 
