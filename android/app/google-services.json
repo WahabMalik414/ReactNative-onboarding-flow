@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "591239517811",
+    "project_id": "reactnative-todo-95808",
+    "storage_bucket": "reactnative-todo-95808.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591239517811:android:9f8c9073d4937ebfe3bc06",
+        "android_client_info": {
+          "package_name": "com.signupflow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdRoeugF8_hG9A82gWdE0CVhz0eTsXI9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

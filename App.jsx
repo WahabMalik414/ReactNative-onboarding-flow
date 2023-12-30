@@ -16,13 +16,23 @@ import Login from './src/components/Login';
 import Signup from './src/components/Signup';
 import {Provider} from 'react-redux';
 import {store} from './src/store/store';
+import Auth from './src/Auth';
+
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="ToDoListHome">
+        <Stack.Navigator initialRouteName="Auth">
+        <Stack.Screen
+            name="Auth"
+            options={{
+              headerShown: false,
+            }}
+            component={Auth}
+          />
           <Stack.Screen
             name="Home"
             options={{
