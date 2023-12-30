@@ -14,7 +14,7 @@ import AddTextInput from './AddTextInput';
 import SearchTextInput from './SearchTextInput';
 import TasksTodoList from './TasksTodoList';
 import {useSelector, useDispatch} from 'react-redux';
-import {increment, addTask} from '../todoSlice.js';
+import {increment, addTask} from '../../store/todoSlice.js';
 export default function TodoListHome() {
   const [input, setInput] = useState('');
   const [description, setDescription] = useState('');

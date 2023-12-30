@@ -22,6 +22,8 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import auth from '@react-native-firebase/auth';
+import {SignUp} from '../store/authenticationSlice';
+import {useDispatch} from 'react-redux';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -30,6 +32,7 @@ export default function Signup() {
   const [checked, setChecked] = React.useState(true);
   const toggleCheckbox = () => setChecked(!checked);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   function handleLogin() {
     navigation.navigate('Login');
@@ -42,22 +45,7 @@ export default function Signup() {
     if (password !== confirmPassword) {
       return Alert.alert("Passwords don't match");
     }
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created & signed in!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
+    dispatch(SignUp({email, password}));
   }
   return (
     <SafeAreaProvider>

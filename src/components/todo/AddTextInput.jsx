@@ -8,13 +8,16 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import React from 'react';
+import {Logout} from '../../store/authenticationSlice';
+import {useDispatch} from 'react-redux';
 
-const handleLogout = () => {
-  auth()
-    .signOut()
-    .then(() => console.log('User signed out'));
-};
 export default function AddTextInput({setInput, setDescription, handleAdd}) {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(Logout());
+  };
+
   return (
     <View style={styles.InputContainer}>
       <TextInput

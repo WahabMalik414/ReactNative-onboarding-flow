@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {editTask, markCompleted, removeTask} from '../todoSlice';
+import {editTask, markCompleted, removeTask} from '../../store/todoSlice';
 
 export default function TasksTodoList({Search, EditIndex, SetEditIndex}) {
   const todos = useSelector(state => state.todo.todos);
