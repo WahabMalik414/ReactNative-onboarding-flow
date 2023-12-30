@@ -36,7 +36,9 @@ export default function Signup() {
   }
 
   function handleSignup() {
-    console.log(password, confirmPassword);
+    if (!(email && password && confirmPassword)) {
+      return Alert.alert('All fields are required');
+    }
     if (password !== confirmPassword) {
       return Alert.alert("Passwords don't match");
     }

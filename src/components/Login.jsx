@@ -37,7 +37,9 @@ export default function Login() {
     navigation.navigate('Signup');
   }
   function handleLogin() {
-    console.log(email, password);
+    if (!(email && password)) {
+      return Alert.alert('All fields are required');
+    }
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
