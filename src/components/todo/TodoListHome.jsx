@@ -15,6 +15,8 @@ import SearchTextInput from './SearchTextInput';
 import TasksTodoList from './TasksTodoList';
 import {useSelector, useDispatch} from 'react-redux';
 import {increment, addTask} from '../../store/todoSlice.js';
+import firestore from '@react-native-firebase/firestore';
+
 export default function TodoListHome() {
   const [input, setInput] = useState('');
   const [description, setDescription] = useState('');
@@ -26,12 +28,18 @@ export default function TodoListHome() {
   const handleAdd = () => {
     if (input && description) {
       const newTask = {
-        id: uuid.v4(),
+        localid: uuid.v4(),
         name: input,
         description: description,
         isCompleted: false,
       };
       dispatch(addTask(newTask));
+      firestore()
+        .collection('todos')
+        .add(newTask)
+        .then(() => {
+          console.log(newTask.name, 'added');
+        });
     } else {
       Alert.alert('Add both name and description');
     }
