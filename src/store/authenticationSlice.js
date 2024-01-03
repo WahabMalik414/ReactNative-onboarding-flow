@@ -16,8 +16,9 @@ export const authenticationSlice = createSlice({
           action.payload.email,
           action.payload.password,
         )
-        .then(() => {
-          console.log('User account created & signed in!');
+        .then(userCredential => {
+          const user = userCredential.user;
+          console.log('User signed in : ', user.uid);
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {

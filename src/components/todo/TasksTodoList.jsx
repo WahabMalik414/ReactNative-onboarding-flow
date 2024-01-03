@@ -1,6 +1,7 @@
 import {useState, useRef, useEffect} from 'react';
 import * as React from 'react';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 import {
   View,
   FlatList,
@@ -11,12 +12,16 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {editTask, markCompleted, removeTask} from '../../store/todoSlice';
+import {
+  editTask,
+  markCompleted,
+  removeTask,
+  setTask,
+} from '../../store/todoSlice';
 import firestore from '@react-native-firebase/firestore';
 
 export default function TasksTodoList({Search, EditIndex, SetEditIndex}) {
-  //const todos = useSelector(state => state.todo.todos);
-  const [todos, setTodos] = useState([]);
+  const todos = useSelector(state => state.todo.todos);
   const filteredTasks = todos.filter(item => item.name.includes(Search));
   const [editInput, setEditInput] = useState('');
   const [editDescription, setEditDescription] = useState('');
@@ -24,7 +29,16 @@ export default function TasksTodoList({Search, EditIndex, SetEditIndex}) {
   const navigation = useNavigation();
 
   useEffect(() => {
+    const userId = auth().currentUser?.uid;
+
+    if (!userId) {
+      // User not signed in, handle accordingly
+      return;
+    }
+
     const unsubscribe = firestore()
+      .collection('users')
+      .doc(userId)
       .collection('todos')
       .onSnapshot(
         querySnapshot => {
@@ -32,43 +46,25 @@ export default function TasksTodoList({Search, EditIndex, SetEditIndex}) {
           querySnapshot.forEach(doc => {
             newTodos.push({id: doc.id, ...doc.data()});
           });
-          setTodos(newTodos);
+          dispatch(setTask(newTodos));
         },
         error => {
-          console.error(error);
+          console.error('Error getting todos:', error);
         },
       );
 
     return () => unsubscribe(); // Unsubscribe when component unmounts
-  }, []);
-
+  }, [dispatch]);
   const handleDelete = item => {
     console.log(item.id);
     SetEditIndex(null);
     setEditInput('');
     dispatch(removeTask(item.id));
-    firestore()
-      .collection('todos')
-      .doc(item.id)
-      .delete()
-      .then(() => {
-        console.log('deleted');
-      });
   };
 
   const handleSave = item => {
     dispatch(editTask({EditIndex, editInput, editDescription}));
     console.log(item.id);
-    firestore()
-      .collection('todos')
-      .doc(item.id)
-      .update({
-        name: editInput,
-        description: editDescription,
-      })
-      .then(() => {
-        console.log('User updated!');
-      });
     SetEditIndex(null);
     setEditInput('');
   };
@@ -83,15 +79,6 @@ export default function TasksTodoList({Search, EditIndex, SetEditIndex}) {
   };
   const handleCompleted = item => {
     dispatch(markCompleted(item.id));
-    firestore()
-      .collection('todos')
-      .doc(item.id)
-      .update({
-        isCompleted: true,
-      })
-      .then(() => {
-        console.log('User updated!');
-      });
   };
   return (
     <FlatList

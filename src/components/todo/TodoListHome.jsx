@@ -34,12 +34,6 @@ export default function TodoListHome() {
         isCompleted: false,
       };
       dispatch(addTask(newTask));
-      firestore()
-        .collection('todos')
-        .add(newTask)
-        .then(() => {
-          console.log(newTask.name, 'added');
-        });
     } else {
       Alert.alert('Add both name and description');
     }

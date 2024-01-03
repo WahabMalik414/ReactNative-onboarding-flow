@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Alert} from 'react-native';
-
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 const initialState = {
   totalTasks: 0,
   todos: [],
@@ -9,35 +10,75 @@ export const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
+    setTask: (state, action) => {
+      state.todos = action.payload;
+      state.totalTasks = action.payload.length;
+    },
     addTask: (state, action) => {
-      state.todos.push(action.payload);
+      firestore()
+        .collection('users')
+        .doc(auth().currentUser.uid)
+        .collection('todos')
+        .add(action.payload)
+        .then(documentReference => {
+          console.log(
+            action.payload.name,
+            'added with id: ',
+            documentReference.email,
+          );
+        })
+        .catch(error => {
+          console.log(error);
+        });
       state.totalTasks += 1;
     },
     removeTask: (state, action) => {
-      state.todos = state.todos.filter(todo => todo.id !== action.payload);
+      firestore()
+        .collection('users')
+        .doc(auth().currentUser.uid)
+        .collection('todos')
+        .doc(action.payload)
+        .delete()
+        .then(() => {
+          console.log('Task deleted successfully');
+        })
+        .catch(error => {
+          console.error('Error deleting task:', error);
+        });
       state.totalTasks -= 1;
     },
     markCompleted: (state, action) => {
-      state.todos = state.todos.map(todo => {
-        if (todo.id === action.payload) {
-          if (todo.isCompleted === true) {
-            Alert.alert('Task already marked as completed!');
-          } else {
-            Alert.alert('Task marked as completed!');
-            todo.isCompleted = true;
-          }
-        }
-        return todo;
-      });
+      firestore()
+        .collection('users')
+        .doc(auth().currentUser.uid)
+        .collection('todos')
+        .doc(action.payload)
+        .update({
+          isCompleted: true,
+        })
+        .then(() => {
+          console.log('updated!');
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     editTask: (state, action) => {
-      state.todos = state.todos.map(todo => {
-        if (todo.id === action.payload.EditIndex) {
-          todo.name = action.payload.editInput;
-          todo.description = action.payload.editDescription;
-        }
-        return todo;
-      });
+      firestore()
+        .collection('users')
+        .doc(auth().currentUser.uid)
+        .collection('todos')
+        .doc(action.payload.EditIndex)
+        .update({
+          name: action.payload.editInput,
+          description: action.payload.editDescription,
+        })
+        .then(() => {
+          console.log('User updated!');
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
   },
 });
@@ -49,5 +90,6 @@ export const {
   removeTask,
   editTask,
   markCompleted,
+  setTask,
 } = todoSlice.actions;
 export default todoSlice.reducer;
